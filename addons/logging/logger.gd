@@ -61,7 +61,11 @@ func _log_internal(msg: String, log_level: Level) -> void:
 			if OS.has_feature("editor"):
 				assert(log_level != Level.CRITICAL)
 			else:
-				OS.crash(format.format(fields))
+				_crash_or_not(format.format(fields))
+
+func _crash_or_not(msg: String) -> void:
+	if ProjectSettings.get_setting("logging/jlogger/editor/crash_on_critical"):
+		OS.crash(msg)
 
 func _formate_datetime_string():
 	var fields := Time.get_datetime_dict_from_system()
