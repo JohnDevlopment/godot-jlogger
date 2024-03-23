@@ -1,7 +1,4 @@
 ## Base class for all loggers.
-## [codeblock]
-## Logger(msg: String, log_level: Level)
-## [/codeblock]
 @tool
 extends RefCounted
 class_name Logger
@@ -82,22 +79,28 @@ func _format_message_string(fmt: String, args: Array = []) -> String:
 func _check_level(level: Level) -> bool:
 	return level >= self.level
 
+## Print a logging message with the severity 'debug'.
 func debug(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.DEBUG)
 
+## Print a logging message with the severity 'info'.
 func info(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.INFO)
 
+## Print a logging message with the severity 'error'.
 func error(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.ERROR)
 
+## Print a logging message with the severity 'warning'.
 func warning(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.WARNING)
 
+## Print a logging message with the severity 'critical'.
+## This comes with the side effect of killing the process.
 func critical(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.CRITICAL)
