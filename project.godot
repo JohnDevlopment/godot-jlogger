@@ -16,11 +16,19 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Logging="*res://addons/logging/logging_autoload.gd"
+
 [display]
 
 window/size/viewport_width=576
 window/size/viewport_height=324
 window/size/resizable=false
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/logging/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
 
 [filesystem]
 
