@@ -49,13 +49,19 @@ func _init(name: String, level) -> void:
 	self.level = level
 
 func _log_internal(msg: String, log_level: Level) -> void:
-	var color: String = COLORS[log_level]
-	var fields := {
-		msg = msg,
-		level = "[color=%s]%s[/color]" % [color, Level.find_key(log_level)],
-		date = _formate_datetime_string()
-	}
-	print_rich(format.format(fields))
+	if _check_level(log_level):
+		var color: String = COLORS[log_level]
+		var fields := {
+			msg = msg,
+			level = "[color=%s]%s[/color]" % [color, Level.find_key(log_level)],
+			date = _formate_datetime_string()
+		}
+		print_rich(format.format(fields))
+		if log_level == Level.CRITICAL:
+			if OS.has_feature("editor"):
+				assert(log_level != Level.CRITICAL)
+			else:
+				OS.crash(format.format(fields))
 
 func _formate_datetime_string():
 	var fields := Time.get_datetime_dict_from_system()
@@ -68,6 +74,9 @@ func _format_message_string(fmt: String, args: Array = []) -> String:
 	if args:
 		return fmt % args
 	return fmt
+
+func _check_level(level: Level) -> bool:
+	return level >= self.level
 
 func debug(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
