@@ -76,3 +76,15 @@ func debug(fmt: String, args: Array = []) -> void:
 func info(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.INFO)
+
+func error(fmt: String, args: Array = []) -> void:
+	var msg := _format_message_string(fmt, args)
+	_log_internal(msg, Level.ERROR)
+
+func warning(fmt: String, args: Array = []) -> void:
+	var msg := _format_message_string(fmt, args)
+	_log_internal(msg, Level.WARNING)
+
+func critical(fmt: String, args: Array = []) -> void:
+	var msg := _format_message_string(fmt, args)
+	_log_internal(msg, Level.CRITICAL)
