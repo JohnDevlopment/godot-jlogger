@@ -5,7 +5,8 @@ extends Node
 var _logger: Logger
 
 func _ready() -> void:
-	_logger = Logger.new("root", LoggingConfig.logger_level)
+	if not Engine.is_editor_hint():
+		_logger = Logger.new("root")
 
 ## Prints a log with the severity debug.
 func debug(fmt: String, args: Array = []) -> void:
