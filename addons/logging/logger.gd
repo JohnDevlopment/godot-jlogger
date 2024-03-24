@@ -5,6 +5,7 @@ class_name Logger
 
 ## Logging level enumeration.
 enum Level {
+	DEFAULT,
 	DEBUG,
 	INFO,
 	WARNING,
@@ -28,19 +29,22 @@ var datetime_format: String
 var _colors: Array[StringName] = []
 
 ## Construct a logger with the given [param name] and [param level].
-func _init(name: String, level: Level) -> void:
+func _init(name: String, level: Level = Level.DEFAULT) -> void:
 	var config := LoggingConfig.as_dict()
 
 	# Set colors
 	for ln in Level.keys():
 		var level_name := (ln as String).to_lower()
+		if level_name == "default":
+			_colors.append("")
+			continue
 		var key := "colors/%s" % level_name
 		var color: StringName = config[key]
 		_colors.append(color)
 
 	self.format = config['logger/format']
 	self.name = name
-	self.level = level
+	self.level = config['logger/level'] if level == Level.DEFAULT else level
 	self.datetime_format = config['logger/datetime_format']
 
 func _log_internal(msg: String, log_level: Level) -> void:
@@ -63,7 +67,7 @@ func _crash_or_not(msg: String) -> void:
 	if ProjectSettings.get_setting("logging/jlogger/editor/crash_on_critical"):
 		OS.crash(msg)
 
-func _formate_datetime_string():
+func _format_datetime_string():
 	var fields := Time.get_datetime_dict_from_system()
 	for key in ["hour", "minute", "second"]:
 		fields[key] = "%02d" % fields[key]
