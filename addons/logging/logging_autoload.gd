@@ -2,8 +2,6 @@
 @tool
 extends Node
 
-const Settings := preload("res://addons/logging/settings.gd")
-
 var _logger: Logger
 
 func _ready() -> void:

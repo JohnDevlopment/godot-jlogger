@@ -25,30 +25,23 @@ var format: String
 ## Format of the date string.
 var datetime_format: String
 
-## A mapping of levels to colors
-#const COLORS := {
-	#Level.DEBUG: "green",
-	#Level.INFO: "blue",
-	#Level.WARNING: "yellow",
-	#Level.ERROR: "red",
-	#Level.CRITICAL: "red"
-#}
-
 var _colors: Array[StringName] = []
 
 ## Construct a logger with the given [param name] and [param level].
 func _init(name: String, level: Level) -> void:
 	var config := LoggingConfig.as_dict()
+
+	# Set colors
 	for ln in Level.keys():
-		var key := "colors/%s" % (ln as String).to_lower()
+		var level_name := (ln as String).to_lower()
+		var key := "colors/%s" % level_name
 		var color: StringName = config[key]
 		_colors.append(color)
-	
-	const SETTINGS := Logging.Settings
-	self.format = SETTINGS.FORMAT
-	self.datetime_format = SETTINGS.DATETIME_FORMAT
+
+	self.format = config['logger/format']
 	self.name = name
 	self.level = level
+	self.datetime_format = config['logger/datetime_format']
 
 func _log_internal(msg: String, log_level: Level) -> void:
 	if _check_level(log_level):
@@ -56,7 +49,8 @@ func _log_internal(msg: String, log_level: Level) -> void:
 		var fields := {
 			msg = msg,
 			level = "[color=%s]%s[/color]" % [color, Level.find_key(log_level)],
-			date = _formate_datetime_string()
+			date = _format_datetime_string(),
+			name = name
 		}
 		print_rich(format.format(fields))
 		if log_level == Level.CRITICAL:
