@@ -97,12 +97,14 @@ func _ready() -> void:
 		if FileAccess.file_exists(CONFIG_FILE):
 			# File exists, so we load it
 			if OS.is_debug_build():
-				print_debug("Loading %s..." % CONFIG_FILE)
+				if ProjectSettings.get_setting_with_override("jlogger/debug"):
+					print_debug("Loading %s..." % CONFIG_FILE)
 			_load_config()
 		else:
 			# File does not exist, so we create it
 			if OS.is_debug_build():
-				print_debug("Creating %s..." % CONFIG_FILE)
+				if ProjectSettings.get_setting_with_override("jlogger/debug"):
+					print_debug("Creating %s..." % CONFIG_FILE)
 			_new_config()
 	else:
 		# In exported debug builds, simply die if config file doesn't exist
@@ -118,7 +120,8 @@ func _load_config() -> void:
 		assert(value != null, "Undefined key '%s/%s'" % [spec.section, spec.key])
 		set(spec.property, value)
 		if OS.is_debug_build():
-			print_debug("Set %s to %s" % [spec.property, value])
+			if ProjectSettings.get_setting_with_override("jlogger/debug"):
+				print_debug("Set %s to %s" % [spec.property, value])
 
 func _new_config() -> void:
 	# Create a new config at CONFIG_FILE
