@@ -17,15 +17,12 @@ enum Level {
 var level: Level
 
 ## Name of the logger.
-## See ["addons/logging/settings.gd"]
 var name: String
 
 ## Format of the logger's messages.
-## See [code]settings.gd[/code].
 var format: String
 
 ## Format of the date string.
-## See [code]settings.gd[/code].
 var datetime_format: String
 
 ## A mapping of levels to colors
