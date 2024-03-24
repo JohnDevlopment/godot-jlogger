@@ -19,8 +19,8 @@ run/project/enable_critical=false
 
 [autoload]
 
-Logging="*res://addons/logging/logging_autoload.gd"
 LoggingConfig="*res://addons/logging/LoggingConfig.gd"
+Logging="*res://addons/logging/logging_autoload.gd"
 
 [display]
 
@@ -30,7 +30,7 @@ window/size/resizable=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/logging/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDScriptMacros/plugin.cfg", "res://addons/logging/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
 
 [filesystem]
 
