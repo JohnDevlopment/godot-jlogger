@@ -6,7 +6,7 @@ func _ready() -> void:
 	_logging_function_1()
 
 func _logging_function_1() -> void:
-	var logger := Logger.new("test", Logger.Level.DEBUG)
+	var logger :=  Logging.get_logger()
 	logger.debug("This is a log.")
 	logger.info("This is a log.")
 	logger.warning("This is a log.")
