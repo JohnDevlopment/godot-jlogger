@@ -2,25 +2,36 @@
 John Russell <johndevlopment7@gmail.com>
 v1.0, 2024-03-24
 :toc:
+ifdef::env-github[]
+:imagesdir: https://raw.githubusercontent.com/JohnDevlopment/godot-jlogger/main/README_images
+endif::[]
+ifndef::env-github[]
+:imagesdir: ./README_images
+endif::[]
 
 A logging plugin for Godot. It allows you log messages and filter them by log levels. You can also format them in several different ways.
 
-NOTE: JLogger was developed in Godot version 4.2.
+NOTE: JLogger was developed and tested under Godot version 4.2.1 stable.
 
 == Installation
 
-To install, simply download the https://github.com/JohnDevlopment/godot-jlogger/archive/refs/heads/main.zip[archive] and extract its contents. Copy `addons/logging` into your project folder, such that your directory structure will look like this:
+There are two ways to install this addon:
 
---------------------------------------------------
-.
-└── addons
-    └── logging
---------------------------------------------------
+* Download one of the https://github.com/JohnDevlopment/godot-jlogger/releases[Releases] and add the `logging` folder to your `addons` folder.
+* Clone this repository and do the same.
 
 == Usage
 
-In your project settings, enable the plugin called `JLogger`. Upon activation, two singletons (or autoloads) are added, `LoggingConfig` and `Logging`, in that order. Additionally, a new class called `Logger` is added.
+In your project settings, enable the `JLogger` plugin. When it's activated, two singletons and a class are added to your project--`Logging`, `Loggingconfig`, and `Logger` respectively. Additionally, a `logging.cfg` is created in the plugin folder.
 
-`LoggingConfig` is used to configure all loggers. On `_ready`, it attempts to read a configuration file called `logging.cfg` in the plugin directory. If that file doesn't exist, it is created. You can edit the file directly to change some properties of `Logger`.
+Right away, you can use `Logging` to start printing logs.
 
-`Logging` allows you to log messages without instancing a `Logger`. Each class has its own documentation.
+image:log-singleton.jpeg[Cannot find image log-singleton.jpeg]
+
+If you want instance a `Logger`, there are two ways to do it. Firstly, you can use `Logging.get_logger()` to get a `Logger` instance. Secondly, you can use `Logger.new()`, although the former is the recommended approach.
+
+Here is a snippet of doing just that:
+
+image:log-objs.jpeg[Cannot find image log-objs.jpeg]
+
+NOTE: There is currently no support for logging to files or other external sources. For right now, loggers only print to the console. But since Godot already has its own log files, this is not neccessarily an issue.

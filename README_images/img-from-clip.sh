@@ -1,0 +1,1 @@
+/home/john/programming/Shell/img-from-clip.sh
