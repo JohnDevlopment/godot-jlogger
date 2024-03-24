@@ -1,0 +1,26 @@
+= godot-jlogger
+John Russell <johndevlopment7@gmail.com>
+v1.0, 2024-03-24
+:toc:
+
+A logging plugin for Godot. It allows you log messages and filter them by log levels. You can also format them in several different ways.
+
+NOTE: JLogger was developed in Godot version 4.2.
+
+== Installation
+
+To install, simply download the https://github.com/JohnDevlopment/godot-jlogger/archive/refs/heads/main.zip[archive] and extract its contents. Copy `addons/logging` into your project folder, such that your directory structure will look like this:
+
+--------------------------------------------------
+.
+└── addons
+    └── logging
+--------------------------------------------------
+
+== Usage
+
+In your project settings, enable the plugin called `JLogger`. Upon activation, two singletons (or autoloads) are added, `LoggingConfig` and `Logging`, in that order. Additionally, a new class called `Logger` is added.
+
+`LoggingConfig` is used to configure all loggers. On `_ready`, it attempts to read a configuration file called `logging.cfg` in the plugin directory. If that file doesn't exist, it is created. You can edit the file directly to change some properties of `Logger`.
+
+`Logging` allows you to log messages without instancing a `Logger`. Each class has its own documentation.
