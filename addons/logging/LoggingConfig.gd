@@ -76,18 +76,23 @@ var logger_level := Logger.Level.INFO
 var logger_format := "{level} {name} [{date}] {msg}"
 
 ## Color for debug logs.
+## See [Logger] for valid colors.
 var color_debug := &"green"
 
 ## Color for info logs.
+## See [Logger] for valid colors.
 var color_info := &"blue"
 
 ## Color for warning logs.
+## See [Logger] for valid colors.
 var color_warning := &"yellow"
 
 ## Color for error logs.
+## See [Logger] for valid colors.
 var color_error := &"red"
 
 ## Color for critical logs.
+## See [Logger] for valid colors.
 var color_critical := &"red"
 
 func _ready() -> void:
