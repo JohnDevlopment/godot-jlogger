@@ -26,6 +26,12 @@ var format: String
 ## Format of the date string.
 var datetime_format: String
 
+## The function to call when a critical log is emitted.
+## On _init, this is set to [method default_crash_behavior], but it
+## can be changed later. The function must accept a string containing
+## the error message.
+var crash_behavior: Callable
+
 var _colors: Array[StringName] = []
 
 ## Construct a logger with the given [param name] and [param level].
@@ -46,6 +52,7 @@ func _init(name: String, level: Level = Level.DEFAULT) -> void:
 	self.name = name
 	self.level = config['logger/level'] if level == Level.DEFAULT else level
 	self.datetime_format = config['logger/datetime_format']
+	self.crash_behavior = default_crash_behavior
 
 func _log_internal(msg: String, log_level: Level) -> void:
 	if _check_level(log_level):
@@ -56,16 +63,23 @@ func _log_internal(msg: String, log_level: Level) -> void:
 			date = _format_datetime_string(),
 			name = name
 		}
-		print_rich(format.format(fields))
-		if log_level == Level.CRITICAL:
-			if OS.has_feature("editor"):
-				assert(log_level != Level.CRITICAL)
-			else:
-				_crash_or_not(format.format(fields))
+		var formatted_message := format.format(fields)
+		print_rich(formatted_message)
+		match log_level:
+			Level.WARNING:
+				fields['level'] = Level.find_key(log_level)
+				push_warning(format.format(fields))
+			Level.ERROR:
+				fields['level'] = Level.find_key(log_level)
+				push_error(format.format(fields))
+			Level.CRITICAL:
+				fields['level'] = Level.find_key(log_level)
+				push_error(format.format(fields))
+				_crash_or_not(formatted_message)
 
 func _crash_or_not(msg: String) -> void:
-	if ProjectSettings.get_setting("logging/jlogger/editor/crash_on_critical"):
-		OS.crash(msg)
+	assert(not Engine.is_editor_hint(), msg)
+	crash_behavior.call(msg)
 
 func _format_datetime_string():
 	var fields := Time.get_datetime_dict_from_system()
@@ -107,3 +121,14 @@ func warning(fmt: String, args: Array = []) -> void:
 func critical(fmt: String, args: Array = []) -> void:
 	var msg := _format_message_string(fmt, args)
 	_log_internal(msg, Level.CRITICAL)
+
+## Default behavior when a critical-level log is emitted.
+static func default_crash_behavior(_msg: String) -> void:
+	#if OS.has_feature("editor"):
+		#assert(false)
+	#OS.crash(msg)
+	var tree := Logging.get_tree()
+	tree.paused = true
+	var timer := tree.create_timer(0.1)
+	await timer.timeout
+	tree.quit(1)
