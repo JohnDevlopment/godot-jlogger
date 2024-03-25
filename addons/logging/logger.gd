@@ -13,9 +13,11 @@ enum Level {
 	CRITICAL
 }
 
-## Logging level.
-## See ["addons/logging/logging.gd"]
-var level: Level
+## Logging level. Cannot be set to [constant DEFAULT].
+var level: Level:
+	set(value):
+		assert(value != Level.DEFAULT, "Invalid in this context")
+		level = value
 
 ## Name of the logger.
 var name: String
