@@ -26,8 +26,7 @@ level: Logger.Level = Logger.Level.DEFAULT) -> Logger:
 	# Otherwise, create new logger and add to cache
 	var logger := Logger.new(name, level)
 	if OS.is_debug_build():
-		if ProjectSettings.get_setting_with_override("jlogger/debug"):
-			print_debug("Creating logger: ", name)
+		print_debug("Creating logger: ", name)
 	_cache[name] = logger
 	return logger
 
