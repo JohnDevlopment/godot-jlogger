@@ -23,9 +23,18 @@ var level: Level:
 var name: String
 
 ## Format of the logger's messages.
+## Valid keys:
+## [br] * date ([String]) - a date in the format of [member datetime_format]
+## [br] * level ([String]) - the logging level
+## [br] * name ([String]) - the logger's name
+## [br] * msg ([String]) - the logging message
 var format: String
 
-## Format of the date string.
+## Format of the date string. Valid keys:
+## [br] * year ([String]) - the year (i.e., 2000)
+## [br] * month ([String]) - zero-padded month number (i.e., 03)
+## [br] * day ([String]) - zero-padded day number (i.e., 01)
+## [br] * timezone ([String]) - string name of the timezone
 var datetime_format: String
 
 ## The function to call when a critical log is emitted.
