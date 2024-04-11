@@ -19,6 +19,5 @@ print('Codetime: ' + str(Time.get_ticks_msec() - CODETIME_START) + 'ms')
 	default = null,
 	property = &"%section%_%name%"
 },
-[macro] jldbg
-if ProjectSettings.get_setting_with_override("jlogger/debug"):
-	pass
+[macro] dockey %key% %type%
+## [br] * %key% (%type%) - ...
