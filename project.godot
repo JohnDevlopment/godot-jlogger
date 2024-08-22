@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="Godot JLogger"
+config/tags=PackedStringArray("godot_4.3", "plugin", "utilities")
+run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/plugin_refresher/plugin.cfg")
+enabled=PackedStringArray("res://addons/jlogger/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
 
 [rendering]
 
