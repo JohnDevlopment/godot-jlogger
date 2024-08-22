@@ -11,30 +11,8 @@ config_version=5
 [application]
 
 config/name="Godot JLogger"
-config/tags=PackedStringArray("godot_4.2", "plugin")
-run/main_scene="res://main.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
-run/project/enable_critical=false
-
-[autoload]
-
-LoggingConfig="*res://addons/logging/LoggingConfig.gd"
-Logging="*res://addons/logging/logging_autoload.gd"
-
-[display]
-
-window/size/viewport_width=576
-window/size/viewport_height=324
-window/size/resizable=false
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/GDScriptMacros/plugin.cfg", "res://addons/logging/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
-
-[filesystem]
-
-import/blender/enabled=false
 
 [rendering]
 
