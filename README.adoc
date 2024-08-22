@@ -3,35 +3,55 @@ John Russell <johndevlopment7@gmail.com>
 v1.0, 2024-03-24
 :toc:
 ifdef::env-github[]
-:imagesdir: https://raw.githubusercontent.com/JohnDevlopment/godot-jlogger/main/README_images
+:imagesdir: https://raw.githubusercontent.com/JohnDevlopment/godot-jlogger/main/README_files/images
 endif::[]
 ifndef::env-github[]
-:imagesdir: ./README_images
+:imagesdir: ./README_files/images
 endif::[]
 
 A logging plugin for Godot. It allows you log messages and filter them by log levels. You can also format them in several different ways.
 
-NOTE: JLogger was developed and tested under Godot version 4.2.1 stable.
+The current version is 2.0; it was edited to conform to Godot's node-based structure.
+
+NOTE: JLogger was developed and tested under Godot version 4.3 stable.
 
 == Installation
 
 There are two ways to install this addon:
 
-* Download one of the https://github.com/JohnDevlopment/godot-jlogger/releases[Releases] and add the `logging` folder to your `addons` folder.
+* Download one of the https://github.com/JohnDevlopment/godot-jlogger/releases[Releases] and add the `jlogger` folder to your `addons` folder.
 * Clone this repository and do the same.
 
 == Usage
 
-In your project settings, enable the `JLogger` plugin. When it's activated, two singletons and a class are added to your project--`Logging`, `Loggingconfig`, and `Logger` respectively. Additionally, a `logging.cfg` is created in the plugin folder.
+In your project settings, enable the `JLogger` plugin. When it's activated, a `LoggerNode` class is added to the list of nodes available.
 
-Right away, you can use `Logging` to start printing logs.
+image:node-list.jpg[Cannot load image node-list.jpg]
 
-image:log-singleton.jpeg[Cannot find image log-singleton.jpeg]
+`LoggerNode` has several properties to modify how and when log messages are printed out.
 
-If you want instance a `Logger`, there are two ways to do it. Firstly, you can use `Logging.get_logger()` to get a `Logger` instance. Secondly, you can use `Logger.new()`, although the former is the recommended approach.
+image:inspector.jpg[Cannot load image inspector.jpg]
 
-Here is a snippet of doing just that:
+Each node contains a reference to a `Logger`, the actual class responsible for printing log messages. The properties control the name, level, and format options of the underlying `Logger`.
 
-image:log-objs.jpeg[Cannot find image log-objs.jpeg]
+To use a `Logger`, you can do this:
 
-NOTE: There is currently no support for logging to files or other external sources. For right now, loggers only print to the console. But since Godot already has its own log files, this is not neccessarily an issue.
+[source,gdscript]
+--------------------------------------------------
+# Assuming logger_node is a LoggerNode
+var logger: Logger = logger_node.logger
+logger.info("Ths is an info message. Hi! My name is %s!", "Bob")
+--------------------------------------------------
+
+But if you want, you can just instance a `Logger` directly. See this example:
+
+[source,gdscript]
+--------------------------------------------------
+func logging_example2() -> void:
+	var _logger := Logger.new(Logger.Level.INFO, "main2", func(_m): pass,
+		"{level} {name}: {msg}", "")
+	_logger.info("I ate %d donuts.", [50])
+--------------------------------------------------
+
+
+TIP: You can check the main scene to see a more fleshed out example.
